@@ -12,7 +12,240 @@
     <h2 style="margin-left: 100px;">This is Heading 2</h2>
 
     <h6 style="position: fixed;">This is Heading 6</h6>
+    
+<p>
+    import './player.css';
+import React from 'react'
 
+
+export default class Details extends React.Component {
+    constructor() {
+      super();
+      this.state = { 
+        players:[
+        { id:101,name:"sachin",city:"mumbai",talent:["Batting","Bowling"]},
+        { id:102,name:"saurav",city:"kolkata",talent:["Batting","Captain"]},
+        { id:103,name:"anil",city:"bangalore",talent:["Batting","Bowling","Captain"]},
+        { id:104,name:"krish",city:"chennai",talent:["Batting","Captain"]},
+        { id:105,name:"mahi",city:"ranchi",talent:["Batting","Bowling","Captain","keeping"]},
+     ],
+     
+     selectedPlayer: null,
+     playerIdInput: '',
+     playerNotFound: false,
+     searchClicked: false
+
+    };
+    }
+
+    handlePlayerClick = (index) => {
+      const { players } = this.state;
+      const selectedPlayer = players[index];
+      const playerIdInput = selectedPlayer.id.toString();
+    
+      this.setState({ selectedPlayer, playerIdInput });
+    };
+
+    handleInputChange = (event) => {
+      this.setState({ playerIdInput: event.target.value });
+    };
+  
+    handleSearch = (event) => {
+      event.preventDefault();
+      const { players, playerIdInput } = this.state;
+      const selectedPlayer = players.find(player => player.id === parseInt(playerIdInput));
+
+      if (selectedPlayer) {
+        this.setState({ selectedPlayer, playerNotFound: false, searchClicked: true, playerIdInput: '' });
+      } else {
+        this.setState({ selectedPlayer: null, playerNotFound: true, searchClicked: true, playerIdInput: '' });
+      }
+    };
+
+render() {
+  const { players, selectedPlayer, playerIdInput, playerNotFound, searchClicked } = this.state;
+    const names = players.map(player => player.name);
+    return (
+        <>
+        <h3>players with Talent</h3>
+        <div class="container">
+        
+        <div class="search">
+        <form onSubmit={this.handleSearch}>
+        <button id="btn">Search</button>
+        <input id="input" type="text" name="name" placeholder='Search with ID' value={playerIdInput} onChange={this.handleInputChange}/>
+        </form>
+        </div>
+
+        <div class="player">
+
+            <div class="playerlist">
+              <div id="list">PlayersList</div>       
+              <div id="ls">                   
+              <ul id="ullist">
+              {names.map((name, index) => (
+                  <li id="li" key={index} onClick={() => this.handlePlayerClick(index)}>
+                    {name}
+                  </li>
+                ))}
+                </ul>
+                </div>
+            </div>
+
+
+            <div class="playerDeatails">
+            <div id="list">Details</div>
+            <div id="ls1">
+            {searchClicked && selectedPlayer && !playerNotFound ? (
+                <div id="fulldeatails">
+                  <p>ID: {selectedPlayer.id}</p>
+                  <p>Name: {selectedPlayer.name}</p>
+                  <p>City: {selectedPlayer.city}</p>
+                  <p>Talents:</p>
+                  <ol>
+                  {selectedPlayer.talent.map((talent, index) => (
+                    <li key={index}>{`${talent}`}</li>
+                  ))}
+                </ol>
+                </div>
+              ) : (
+                <div className="playerNotFound">
+                  {searchClicked && playerNotFound && <p>Player not found.</p>}
+                </div>
+            
+              )}
+              </div>
+              
+            </div>
+
+        </div>
+
+        </div></>
+
+    );
+}
+}
+
+</p>
+    <p>CSS Starts...
+        h3{
+    text-align: center;
+    font-family:'Courier New', Courier, monospace;
+}
+
+.container{
+   height: auto;
+   border-style: solid;
+   border-width: 1.5px;
+   margin: 0 5rem 0 5rem;
+   background-color: cornflowerblue;
+   padding-top: 15px;
+}
+
+.search{
+    border-style: solid;
+    border-width: 1px;
+    margin: 0 10rem 0 10rem;
+    text-align: center;
+    background-color: lightgrey;
+    padding: 10px 0 10px 0;
+}
+
+#btn{
+   padding: 10px 20px;
+   border-style:solid;
+   border-radius: 5px;
+   font-size: medium;
+   background-color:rgb(172, 172, 227);
+   margin-right: 2rem;
+   cursor:pointer;
+}
+
+#input{
+    padding: 10px 20px;
+    font-size: medium;
+    background-color:rgb(172, 172, 227);
+}
+
+ .player{
+    display: flex;
+    flex-direction: row;
+    margin-left: 17.5rem;
+
+}
+
+#ullist{
+    list-style-type: none;
+    padding:0;
+    margin: 15px;
+}
+
+#li{
+    padding-bottom: 20px;
+}
+
+#li:hover{
+    background-color:rgb(233, 227, 53);
+    cursor: pointer;
+    border-style: solid;
+    border-color: green;
+    
+   
+}
+
+.playerlist{
+    background-color: lightgrey;
+    width: 12rem;
+    height: auto;
+    margin: 5rem 0rem 0 0rem;
+    text-align:left;
+    padding-left:0;
+    font-size: large;
+    margin-bottom: 1.5rem;
+}
+
+#list{
+    margin-bottom: 0;
+    font-family:'Courier New', Courier, monospace;
+    background-color: cornflowerblue;
+    color:black;
+    padding-bottom: 1rem;
+    font-weight:bold;
+    text-align: center;
+    
+}
+
+.playerDeatails{
+    background-color: lightgrey;
+    width: 12rem;
+    height: auto;
+    margin: 5rem 0rem 0 10rem;
+    text-align:left ;
+    padding-left: 0;
+    font-size: large;
+    margin-bottom: 1.5rem;
+ 
+}
+
+#fulldeatails{
+
+    padding-left: 20px;
+    
+}
+
+ /* #ls{
+    height: auto;
+    border-style: solid;
+} */
+
+body{
+    border-style: solid;
+    padding-bottom: 70px;
+   margin: 0 20px 0 20px;
+   margin-top: 10px;
+}
+
+    </p>
 
     
 </body>
