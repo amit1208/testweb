@@ -9,59 +9,60 @@
 
     <h1 style="background-color: blue;">...</h1>
  <code>
-import React, { useState } from 'react';
 
-const PlayerList = ({ players, onPlayerSelect }) => {
+   import React, { useState } from 'react';
+
+const PlayerList = ({ players, onPlayerSelect }) =>> {
   return (
-    <div>
-      <h2>Player List</h2>
-      <ul>
-        {players.map((player) => (
-          <li key={player.id} onClick={() => onPlayerSelect(player)}>
+    <<div>>
+      <<h2>>Player List<</h2>>
+      <<ul>>
+        {players.map((player) =>> (
+          <<li key={player.id} onClick={() =>> onPlayerSelect(player)}>>
             {player.name}
-          </li>
+          <</li>>
         ))}
-      </ul>
-    </div>
+      <</ul>>
+    <</div>>
   );
 };
 
-const Detail = ({ player }) => {
+const Detail = ({ player }) =>> {
   if (!player) {
-    return <div>No player selected</div>;
+    return <<div>>No player selected<</div>>;
   }
 
   return (
-    <div>
-      <h2>Player Details</h2>
-      <p>ID: {player.id}</p>
-      <p>Name: {player.name}</p>
-      <p>City: {player.city}</p>
-      <p>Talent: {player.talent.join(', ')}</p>
-    </div>
+    <<div>>
+      <<h2>>Player Details<</h2>>
+      <<p>>ID: {player.id}<</p>>
+      <<p>>Name: {player.name}<</p>>
+      <<p>>City: {player.city}<</p>>
+      <<p>>Talent: {player.talent.join(', ')}<</p>>
+    <</div>>
   );
 };
 
-const Search = ({ searchTerm, onSearch }) => {
-  const handleSearch = () => {
+const Search = ({ searchTerm, onSearch }) =>> {
+  const handleSearch = () =>> {
     onSearch(searchTerm);
   };
 
   return (
-    <div>
-      <label htmlFor="search">Search:</label>
-      <input
+    <<div>>
+      <<label htmlFor="search">>Search:<</label>>
+      <<input
         type="text"
         id="search"
         value={searchTerm}
-        onChange={(e) => onSearch(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
-    </div>
+        onChange={(e) =>> onSearch(e.target.value)}
+      />>
+      <<button onClick={handleSearch}>>Search<</button>>
+    <</div>>
   );
 };
 
-const App = () => {
+const App = () =>> {
   const initialState = [
     { id: 101, name: 'sachin', city: 'Mumbai', talent: ['Batting', 'Bowling'] },
     { id: 102, name: 'saurav', city: 'Kolkata', talent: ['Batting', 'Captain'] },
@@ -74,13 +75,13 @@ const App = () => {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handlePlayerSelect = (player) => {
+  const handlePlayerSelect = (player) =>> {
     setSelectedPlayer(player);
     setSearchTerm(player.id.toString());
   };
 
-  const handleSearch = (searchTerm) => {
-    const searchedPlayer = players.find((player) => player.id.toString() === searchTerm);
+  const handleSearch = (searchTerm) =>> {
+    const searchedPlayer = players.find((player) =>> player.id.toString() === searchTerm);
     if (searchedPlayer) {
       setSelectedPlayer(searchedPlayer);
     } else {
@@ -90,24 +91,25 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>Players With Talent</h1>
-      <div>
-        <Search searchTerm={searchTerm} onSearch={handleSearch} />
-      </div>
-      <div style={{ display: 'flex' }}>
-        <div style={{ flex: 1 }}>
-          <PlayerList players={players} onPlayerSelect={handlePlayerSelect} />
-        </div>
-        <div style={{ flex: 1 }}>
-          <Detail player={selectedPlayer} />
-        </div>
-      </div>
-    </div>
+    <<div>>
+      <<h1>>Players With Talent<</h1>>
+      <<div>>
+        <<Search searchTerm={searchTerm} onSearch={handleSearch} />>
+      <</div>>
+      <<div style={{ display: 'flex' }}>>
+        <<div style={{ flex: 1 }}>>
+          <<PlayerList players={players} onPlayerSelect={handlePlayerSelect} />>
+        <</div>>
+        <<div style={{ flex: 1 }}>>
+          <<Detail player={selectedPlayer} />>
+        <</div>>
+      <</div>>
+    <</div>>
   );
 };
 
-export default App;
+export default App; 
+  
  
   </code>
    
