@@ -8,60 +8,60 @@
 <body>
 
     <h1 style="background-color: blue;">...</h1>
-  <code>
-      import React, { useState } from 'react';
+ <code>
+import React, { useState } from 'react';
 
-const PlayerList = ^{ players, onPlayerSelect }_ =# {
-  return ^
-    @div#
-      @h2#Player List@/h2#
-      @ul#
-        {players.map^^player_ =# ^
-          @li key={player.id} onClick={^_ =# onPlayerSelect^player_}#
+const PlayerList = ({ players, onPlayerSelect }) => {
+  return (
+    <div>
+      <h2>Player List</h2>
+      <ul>
+        {players.map((player) => (
+          <li key={player.id} onClick={() => onPlayerSelect(player)}>
             {player.name}
-          @/li#
-        __}
-      @/ul#
-    @/div#
-  _;
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
-const Detail = ^{ player }_ =# {
-  if ^!player_ {
-    return @div#No player selected@/div#;
+const Detail = ({ player }) => {
+  if (!player) {
+    return <div>No player selected</div>;
   }
 
-  return ^
-    @div#
-      @h2#Player Details@/h2#
-      @p#ID: {player.id}@/p#
-      @p#Name: {player.name}@/p#
-      @p#City: {player.city}@/p#
-      @p#Talent: {player.talent.join^', '_}@/p#
-    @/div#
-  _;
+  return (
+    <div>
+      <h2>Player Details</h2>
+      <p>ID: {player.id}</p>
+      <p>Name: {player.name}</p>
+      <p>City: {player.city}</p>
+      <p>Talent: {player.talent.join(', ')}</p>
+    </div>
+  );
 };
 
-const Search = ^{ searchTerm, onSearch }_ =# {
-  const handleSearch = ^_ =# {
-    onSearch^searchTerm_;
+const Search = ({ searchTerm, onSearch }) => {
+  const handleSearch = () => {
+    onSearch(searchTerm);
   };
 
-  return ^
-    @div#
-      @label htmlFor="search"#Search:@/label#
-      @input
+  return (
+    <div>
+      <label htmlFor="search">Search:</label>
+      <input
         type="text"
         id="search"
         value={searchTerm}
-        onChange={^e_ =# onSearch^e.target.value_}
-      /#
-      @button onClick={handleSearch}#Search@/button#
-    @/div#
-  _;
+        onChange={(e) => onSearch(e.target.value)}
+      />
+      <button onClick={handleSearch}>Search</button>
+    </div>
+  );
 };
 
-const App = ^_ =# {
+const App = () => {
   const initialState = [
     { id: 101, name: 'sachin', city: 'Mumbai', talent: ['Batting', 'Bowling'] },
     { id: 102, name: 'saurav', city: 'Kolkata', talent: ['Batting', 'Captain'] },
@@ -70,44 +70,45 @@ const App = ^_ =# {
     { id: 105, name: 'mahi', city: 'Ranchi', talent: ['Batting', 'Bowling', 'Captain', 'Keeping'] },
   ];
 
-  const [players, setPlayers] = useState^initialState_;
-  const [selectedPlayer, setSelectedPlayer] = useState^null_;
-  const [searchTerm, setSearchTerm] = useState^''_;
+  const [players, setPlayers] = useState(initialState);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handlePlayerSelect = ^player_ =# {
-    setSelectedPlayer^player_;
-    setSearchTerm^player.id.toString^__;
+  const handlePlayerSelect = (player) => {
+    setSelectedPlayer(player);
+    setSearchTerm(player.id.toString());
   };
 
-  const handleSearch = ^searchTerm_ =# {
-    const searchedPlayer = players.find^^player_ =# player.id.toString^_ === searchTerm_;
-    if ^searchedPlayer_ {
-      setSelectedPlayer^searchedPlayer_;
+  const handleSearch = (searchTerm) => {
+    const searchedPlayer = players.find((player) => player.id.toString() === searchTerm);
+    if (searchedPlayer) {
+      setSelectedPlayer(searchedPlayer);
     } else {
-      setSelectedPlayer^null_;
+      setSelectedPlayer(null);
     }
-    setSearchTerm^searchTerm_;
+    setSearchTerm(searchTerm);
   };
 
-  return ^
-    @div#
-      @h1#Players With Talent@/h1#
-      @div#
-        @Search searchTerm={searchTerm} onSearch={handleSearch} /#
-      @/div#
-      @div style={{ display: 'flex' }}#
-        @div style={{ flex: 1 }}#
-          @PlayerList players={players} onPlayerSelect={handlePlayerSelect} /#
-        @/div#
-        @div style={{ flex: 1 }}#
-          @Detail player={selectedPlayer} /#
-        @/div#
-      @/div#
-    @/div#
-  _;
+  return (
+    <div>
+      <h1>Players With Talent</h1>
+      <div>
+        <Search searchTerm={searchTerm} onSearch={handleSearch} />
+      </div>
+      <div style={{ display: 'flex' }}>
+        <div style={{ flex: 1 }}>
+          <PlayerList players={players} onPlayerSelect={handlePlayerSelect} />
+        </div>
+        <div style={{ flex: 1 }}>
+          <Detail player={selectedPlayer} />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default App;
+ 
   </code>
    
 </body>
